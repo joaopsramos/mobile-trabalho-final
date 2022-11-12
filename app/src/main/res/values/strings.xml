@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Grocelist</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_shopping_cart">ShoppingCartActivity</string>
+    <string name="title_activity_history">HistoryActivity</string>
+</resources>
