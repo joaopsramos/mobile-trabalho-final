@@ -32,7 +32,7 @@ class LoginActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.primary,
                 ) {
-                    LoginUI()
+                    Login()
                 }
             }
         }
@@ -41,7 +41,7 @@ class LoginActivity : ComponentActivity() {
 
 //@Preview(showBackground = true)
 @Composable
-fun LoginUI() {
+fun Login(onLogin: (() -> Unit)? = null) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -61,12 +61,12 @@ fun LoginUI() {
 
         Spacer(modifier = Modifier.height(64.dp))
 
-        Form()
+        Form(onLogin)
     }
 }
 
 @Composable
-fun Logo() {
+private fun Logo() {
     Surface(
         color = MaterialTheme.colors.surface,
         shape = CircleShape,
@@ -84,7 +84,7 @@ fun Logo() {
 }
 
 @Composable
-fun Form() {
+private fun Form(onLogin: (() -> Unit)? = null) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val formFieldModifier = Modifier
@@ -112,7 +112,7 @@ fun Form() {
     )
 
     Button(
-        onClick = { /*TODO*/ },
+        onClick = { onLogin?.invoke() },
         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary),
         modifier = formFieldModifier.padding(top = 16.dp)
     ) {
