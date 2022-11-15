@@ -18,7 +18,9 @@ abstract class AppDatabase : RoomDatabase() {
 
         fun getDatabase(context: Context): AppDatabase {
             if (INSTANCE == null) {
-                INSTANCE = buildDatabase(context)
+                synchronized(this) {
+                    INSTANCE = buildDatabase(context)
+                }
             }
 
             return INSTANCE!!

@@ -1,5 +1,6 @@
 package com.example.grocelist.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,8 +21,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.example.grocelist.MainActivity
 import com.example.grocelist.R
-import com.example.grocelist.ui.ui.theme.GrocelistTheme
+import com.example.grocelist.ui.theme.GrocelistTheme
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +34,9 @@ class LoginActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.primary,
                 ) {
-                    Login()
+                    Login() {
+                        startActivity(Intent(this, MainActivity::class.java))
+                    }
                 }
             }
         }

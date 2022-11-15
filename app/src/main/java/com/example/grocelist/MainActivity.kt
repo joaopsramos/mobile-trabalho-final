@@ -16,14 +16,13 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.grocelist.ui.new_item.AddShoppingItemActivity
 import com.example.grocelist.ui.History
-import com.example.grocelist.ui.ShoppingCart
-import com.example.grocelist.ui.ShoppingCartViewModel
+import com.example.grocelist.ui.shopping_cart.ShoppingCart
+import com.example.grocelist.ui.shopping_cart.ShoppingCartViewModel
 import com.example.grocelist.ui.routes.Screen
 import com.example.grocelist.ui.theme.GrocelistTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -72,10 +71,15 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable(Screen.ShoppingCart.route) {
                             ShoppingCart(viewModel) {
-                                startActivity(Intent(this@MainActivity, AddShoppingItemActivity::class.java))
+                                startActivity(
+                                    Intent(
+                                        this@MainActivity,
+                                        AddShoppingItemActivity::class.java
+                                    )
+                                )
                             }
                         }
-                        composable(Screen.History.route) { History(navController) }
+                        composable(Screen.History.route) { History(viewModel) }
                     }
                 }
             }

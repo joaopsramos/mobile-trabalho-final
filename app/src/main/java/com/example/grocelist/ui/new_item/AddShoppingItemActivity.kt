@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.example.grocelist.ui.ui.theme.GrocelistTheme
+import com.example.grocelist.ui.theme.GrocelistTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddShoppingItemActivity : ComponentActivity() {
@@ -34,7 +34,6 @@ class AddShoppingItemActivity : ComponentActivity() {
                             label = { Text("Item") },
                             onValueChange = { viewModel.itemName = it },
                             modifier = Modifier
-//                                    .fillMaxWidth()
                                 .padding(start = 16.dp, end = 16.dp),
                             textStyle = MaterialTheme.typography.body1,
                             maxLines = 1
@@ -49,7 +48,6 @@ class AddShoppingItemActivity : ComponentActivity() {
                             label = { Text("Qty") },
                             textStyle = MaterialTheme.typography.body1,
                             modifier = Modifier
-//                                    .fillMaxWidth()
                                 .padding(end = 16.dp),
                         )
                     }

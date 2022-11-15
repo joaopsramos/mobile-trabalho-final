@@ -1,11 +1,20 @@
 package com.example.grocelist.ui
 
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
+import androidx.compose.runtime.collectAsState
+import com.example.grocelist.model.ShoppingItem
+import com.example.grocelist.ui.shopping_cart.ShoppingCartViewModel
 
 @Composable
-fun History(navController: NavController) {
-    Text(text = "Hello history!")
+fun History(viewModel: ShoppingCartViewModel) {
+    val items = viewModel.all(picked = true).collectAsState(initial = listOf())
+    val onTogglePicked: (ShoppingItem, Boolean) -> Unit =
+        { item: ShoppingItem, picked: Boolean -> viewModel.togglePicked(item.id, picked) }
+
+    ShoppingItemList(
+        items = items,
+        title = "History",
+        onTogglePicked = onTogglePicked,
+    )
 }
 
