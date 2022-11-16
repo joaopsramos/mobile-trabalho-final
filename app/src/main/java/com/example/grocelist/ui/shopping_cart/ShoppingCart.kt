@@ -1,22 +1,41 @@
 package com.example.grocelist.ui.shopping_cart
 
+import android.content.Intent
 import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
 import com.example.grocelist.model.ShoppingItem
 import com.example.grocelist.ui.ShoppingItemList
 
 @Composable
-fun ShoppingCart(viewModel: ShoppingCartViewModel, onAddClick: (() -> Unit)? = null) {
+fun ShoppingCart(
+    viewModel: ShoppingCartViewModel,
+    onAddClick: (() -> Unit)? = null,
+    onItemClick: ((ShoppingItem) -> Unit)? = null
+) {
+    val context = LocalContext.current
     val items = viewModel.all(picked = false).collectAsState(initial = listOf())
-    val onDeleteClick: (ShoppingItem) -> Unit = { item: ShoppingItem -> viewModel.delete(item.id) }
+
+    val onDeleteClick: (ShoppingItem) -> Unit = { item -> viewModel.delete(item.id) }
     val onTogglePicked: (ShoppingItem, Boolean) -> Unit =
-        { item: ShoppingItem, picked: Boolean -> viewModel.togglePicked(item.id, picked) }
+        { item, picked -> viewModel.togglePicked(item.id, picked) }
+    val onShareClick: (List<ShoppingItem>) -> Unit = { local_items ->
+        val intent = Intent(Intent.ACTION_SEND)
+
+        intent.type = "text/plain"
+        intent.putExtra(Intent.EXTRA_TEXT, local_items.joinToString("\n") { "${it.qty} - ${it.name}" })
+        context.startActivity(intent)
+    }
 
     ShoppingItemList(
         items = items,
         title = "Shopping Cart",
-        onAddClick,
-        onTogglePicked,
-        onDeleteClick
+        onAddClick = onAddClick,
+        onTogglePicked = onTogglePicked,
+        onItemClick = onItemClick,
+        onDeleteClick = onDeleteClick,
+        onShareClick = onShareClick
     )
+
 }
+
 

@@ -14,7 +14,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.grocelist.ui.new_item.AddShoppingItemActivity
+import com.example.grocelist.model.ShoppingItem
+import com.example.grocelist.ui.item.ShoppingItemActivity
 import com.example.grocelist.ui.History
 import com.example.grocelist.ui.shopping_cart.ShoppingCart
 import com.example.grocelist.ui.shopping_cart.ShoppingCartViewModel
@@ -69,17 +70,37 @@ class MainActivity : ComponentActivity() {
                         startDestination = Screen.ShoppingCart.route,
                         Modifier.padding(innerPadding)
                     ) {
+                        val onItemClick: (ShoppingItem) -> Unit = { item ->
+                            val intent =
+                                Intent(this@MainActivity, ShoppingItemActivity::class.java).apply {
+                                    putExtra("id", item.id)
+                                }
+                            startActivity(intent)
+                        }
+
                         composable(Screen.ShoppingCart.route) {
-                            ShoppingCart(viewModel) {
+                            val onAddClick: () -> Unit = {
                                 startActivity(
                                     Intent(
                                         this@MainActivity,
-                                        AddShoppingItemActivity::class.java
+                                        ShoppingItemActivity::class.java
                                     )
                                 )
                             }
+
+                            ShoppingCart(
+                                viewModel,
+                                onAddClick = onAddClick,
+                                onItemClick = onItemClick
+                            )
                         }
-                        composable(Screen.History.route) { History(viewModel) }
+
+                        composable(Screen.History.route) {
+                            History(
+                                viewModel,
+                                onItemClick = onItemClick
+                            )
+                        }
                     }
                 }
             }

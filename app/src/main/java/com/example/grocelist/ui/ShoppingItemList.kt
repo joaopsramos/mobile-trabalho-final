@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -16,13 +17,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.grocelist.model.ShoppingItem
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ShoppingItemList(
     items: State<List<ShoppingItem>>,
     title: String,
     onAddClick: (() -> Unit)? = null,
     onTogglePicked: (ShoppingItem, Boolean) -> Unit,
-    onDeleteClick: ((ShoppingItem) -> Unit)? = null
+    onItemClick: ((ShoppingItem) -> Unit)? = null,
+    onDeleteClick: ((ShoppingItem) -> Unit)? = null,
+    onShareClick: ((List<ShoppingItem>) -> Unit)? = null
 ) {
     Column(
         modifier = Modifier
@@ -41,7 +45,9 @@ fun ShoppingItemList(
         LazyColumn(modifier = Modifier.weight(1f)) {
             items(items.value) { item ->
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Surface(
@@ -53,7 +59,8 @@ fun ShoppingItemList(
                                 MaterialTheme.colors.secondaryVariant,
                                 MaterialTheme.shapes.medium
                             ),
-                        shape = MaterialTheme.shapes.medium
+                        shape = MaterialTheme.shapes.medium,
+                        onClick = { onItemClick?.invoke(item) }
                     ) {
                         ShoppingItem(item, onTogglePicked)
                     }
@@ -73,18 +80,29 @@ fun ShoppingItemList(
             }
         }
 
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(vertical = 16.dp, horizontal = 16.dp)
         ) {
             FloatingActionButton(
+                modifier = Modifier.align(Alignment.Center),
                 onClick = { onAddClick?.invoke() },
                 contentColor = MaterialTheme.colors.surface,
                 backgroundColor = MaterialTheme.colors.primary
             ) {
                 Icon(Icons.Default.Add, contentDescription = "add")
+            }
+
+            if (onShareClick != null) {
+                FloatingActionButton(
+                    modifier = Modifier.align(Alignment.CenterEnd).width(38.dp).height(38.dp),
+                    onClick = { onShareClick.invoke(items.value) },
+                    contentColor = MaterialTheme.colors.surface,
+                    backgroundColor = MaterialTheme.colors.secondary
+                ) {
+                    Icon(Icons.Default.Share, contentDescription = "share")
+                }
             }
         }
     }
@@ -116,7 +134,7 @@ fun ShoppingItem(
         }
 
         Text(
-            modifier = Modifier.padding(end = 4.dp),
+            modifier = Modifier.padding(end = 8.dp),
             text = "Qty: ${item.qty}",
             style = MaterialTheme.typography.subtitle1
         )

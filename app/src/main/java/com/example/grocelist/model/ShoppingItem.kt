@@ -10,5 +10,5 @@ data class ShoppingItem(
     val qty: Int,
     val picked: Boolean = false
 ) {
-    constructor(name: String, qty: Int) : this(0L, name, qty)
+    constructor(name: String, qty: Int, picked: Boolean = false) : this(0L, name, qty, picked)
 }

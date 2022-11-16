@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Grocelist"
         tools:targetApi="31">
         <activity
-            android:name=".ui.new_item.AddShoppingItemActivity"
+            android:name=".ui.item.ShoppingItemActivity"
             android:exported="false"
             android:label="@string/title_activity_add_shopping_item"
             android:theme="@style/Theme.Grocelist">
