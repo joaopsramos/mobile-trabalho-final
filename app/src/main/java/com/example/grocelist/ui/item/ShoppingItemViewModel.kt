@@ -17,6 +17,9 @@ class ShoppingItemViewModel(private val repo: ShoppingItemRepository) : ViewMode
     var itemQty by mutableStateOf("1")
     var picked by mutableStateOf("false")
 
+    var nameError by mutableStateOf("")
+    var qtyError by mutableStateOf("")
+
     fun fillItemInformation(itemId: Long) {
         viewModelScope.launch {
             if (itemId == -1L) return@launch
@@ -29,6 +32,17 @@ class ShoppingItemViewModel(private val repo: ShoppingItemRepository) : ViewMode
             itemQty = item.qty.toString()
             picked = item.picked.toString()
         }
+    }
+
+    fun isValid(): Boolean {
+        nameError = if (itemName.isEmpty()) "O nome do item não pode ser vazio" else ""
+        qtyError = if (itemQty.toInt() <= 0) "A quantidade deve ser maior que 0" else ""
+
+        if (nameError.isNotBlank() || qtyError.isNotBlank()) {
+            return false
+        }
+
+        return true
     }
 
     fun add() = viewModelScope.launch(Dispatchers.IO) {

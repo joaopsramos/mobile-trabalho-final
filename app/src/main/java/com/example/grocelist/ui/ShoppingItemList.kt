@@ -85,13 +85,15 @@ fun ShoppingItemList(
                 .fillMaxWidth()
                 .padding(vertical = 16.dp, horizontal = 16.dp)
         ) {
-            FloatingActionButton(
-                modifier = Modifier.align(Alignment.Center),
-                onClick = { onAddClick?.invoke() },
-                contentColor = MaterialTheme.colors.surface,
-                backgroundColor = MaterialTheme.colors.primary
-            ) {
-                Icon(Icons.Default.Add, contentDescription = "add")
+            if (onAddClick != null) {
+                FloatingActionButton(
+                    modifier = Modifier.align(Alignment.Center),
+                    onClick = { onAddClick.invoke() },
+                    contentColor = MaterialTheme.colors.surface,
+                    backgroundColor = MaterialTheme.colors.primary
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = "add")
+                }
             }
 
             if (onShareClick != null) {
@@ -135,7 +137,7 @@ fun ShoppingItem(
 
         Text(
             modifier = Modifier.padding(end = 8.dp),
-            text = "Qty: ${item.qty}",
+            text = "Qtd: ${item.qty}",
             style = MaterialTheme.typography.subtitle1
         )
     }

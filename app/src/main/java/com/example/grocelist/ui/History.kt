@@ -13,9 +13,10 @@ fun History(viewModel: ShoppingCartViewModel, onItemClick: (ShoppingItem) -> Uni
 
     ShoppingItemList(
         items = items,
-        title = "History",
+        title = "Histórico",
         onTogglePicked = onTogglePicked,
-        onItemClick = onItemClick
+        onItemClick = onItemClick,
+        onDeleteClick = onDeleteClick
     )
 }
 

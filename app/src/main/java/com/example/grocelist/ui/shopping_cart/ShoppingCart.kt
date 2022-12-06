@@ -28,7 +28,7 @@ fun ShoppingCart(
 
     ShoppingItemList(
         items = items,
-        title = "Shopping Cart",
+        title = "Carrinho de compras",
         onAddClick = onAddClick,
         onTogglePicked = onTogglePicked,
         onItemClick = onItemClick,
