@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ShoppingItemDao {
-    @Query("SELECT * FROM shopping_item WHERE picked = :picked")
-    fun all(picked: Boolean): Flow<List<ShoppingItem>>
+    @Query("SELECT * FROM shopping_item WHERE userId = :userId AND picked = :picked")
+    fun all(userId: Long, picked: Boolean): Flow<List<ShoppingItem>>
 
     @Query("SELECT * FROM shopping_item WHERE id = :id")
     suspend fun get(id: Long): ShoppingItem

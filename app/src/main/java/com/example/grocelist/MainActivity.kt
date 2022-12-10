@@ -20,6 +20,7 @@ import com.example.grocelist.ui.History
 import com.example.grocelist.ui.shopping_cart.ShoppingCart
 import com.example.grocelist.ui.shopping_cart.ShoppingCartViewModel
 import com.example.grocelist.ui.routes.Screen
+import com.example.grocelist.ui.shopping_cart.ImportCartActivity
 import com.example.grocelist.ui.theme.GrocelistTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -28,6 +29,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val viewModel: ShoppingCartViewModel by viewModel()
+            val userId = intent.getLongExtra("userId", -1)
 
             GrocelistTheme {
                 val navController = rememberNavController()
@@ -74,6 +76,7 @@ class MainActivity : ComponentActivity() {
                             val intent =
                                 Intent(this@MainActivity, ShoppingItemActivity::class.java).apply {
                                     putExtra("id", item.id)
+                                    putExtra("userId", userId)
                                 }
                             startActivity(intent)
                         }
@@ -84,20 +87,36 @@ class MainActivity : ComponentActivity() {
                                     Intent(
                                         this@MainActivity,
                                         ShoppingItemActivity::class.java
-                                    )
+                                    ).apply {
+                                        putExtra("userId", userId)
+                                    }
+                                )
+                            }
+
+                            val onImportClick: () -> Unit = {
+                                startActivity(
+                                    Intent(
+                                        this@MainActivity,
+                                        ImportCartActivity::class.java
+                                    ).apply {
+                                        putExtra("userId", userId)
+                                    }
                                 )
                             }
 
                             ShoppingCart(
                                 viewModel,
+                                userId,
                                 onAddClick = onAddClick,
-                                onItemClick = onItemClick
+                                onItemClick = onItemClick,
+                                onImportClick = onImportClick
                             )
                         }
 
                         composable(Screen.History.route) {
                             History(
                                 viewModel,
+                                userId,
                                 onItemClick = onItemClick
                             )
                         }

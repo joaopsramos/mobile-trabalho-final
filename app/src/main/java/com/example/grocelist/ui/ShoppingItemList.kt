@@ -7,8 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -26,7 +25,8 @@ fun ShoppingItemList(
     onTogglePicked: (ShoppingItem, Boolean) -> Unit,
     onItemClick: ((ShoppingItem) -> Unit)? = null,
     onDeleteClick: ((ShoppingItem) -> Unit)? = null,
-    onShareClick: ((List<ShoppingItem>) -> Unit)? = null
+    onShareClick: ((List<ShoppingItem>) -> Unit)? = null,
+    onImportClick: (() -> Unit)? = null,
 ) {
     Column(
         modifier = Modifier
@@ -85,6 +85,17 @@ fun ShoppingItemList(
                 .fillMaxWidth()
                 .padding(vertical = 16.dp, horizontal = 16.dp)
         ) {
+            if (onImportClick != null) {
+                FloatingActionButton(
+                    modifier = Modifier.align(Alignment.CenterStart).width(38.dp).height(38.dp),
+                    onClick = { onImportClick.invoke() },
+                    contentColor = MaterialTheme.colors.surface,
+                    backgroundColor = MaterialTheme.colors.secondary
+                ) {
+                    Icon(Icons.Default.GetApp, contentDescription = "share")
+                }
+            }
+
             if (onAddClick != null) {
                 FloatingActionButton(
                     modifier = Modifier.align(Alignment.Center),

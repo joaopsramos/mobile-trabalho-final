@@ -6,9 +6,10 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.grocelist.model.ShoppingItem
 
-@Database(entities = [ShoppingItem::class], version = 1)
+@Database(entities = [ShoppingItem::class, User::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun shoppingItemDao(): ShoppingItemDao
+    abstract fun userDao(): UserDao
 
     companion object {
         private const val databaseName = "grocelist-db"

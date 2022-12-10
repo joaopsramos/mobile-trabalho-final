@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ShoppingCartViewModel(private val repo: ShoppingItemRepository) : ViewModel() {
-    fun all(picked: Boolean) = repo.all(picked)
+    fun all(userId: Long, picked: Boolean) = repo.all(userId, picked)
 
     fun delete(id: Long) = viewModelScope.launch(Dispatchers.IO) {
         repo.delete(id)

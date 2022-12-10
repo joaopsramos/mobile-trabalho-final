@@ -9,11 +9,13 @@ import com.example.grocelist.ui.ShoppingItemList
 @Composable
 fun ShoppingCart(
     viewModel: ShoppingCartViewModel,
+    userId: Long,
     onAddClick: (() -> Unit)? = null,
-    onItemClick: ((ShoppingItem) -> Unit)? = null
+    onItemClick: ((ShoppingItem) -> Unit)? = null,
+    onImportClick: (() -> Unit)? = null,
 ) {
     val context = LocalContext.current
-    val items = viewModel.all(picked = false).collectAsState(initial = listOf())
+    val items = viewModel.all(userId, picked = false).collectAsState(initial = listOf())
 
     val onDeleteClick: (ShoppingItem) -> Unit = { item -> viewModel.delete(item.id) }
     val onTogglePicked: (ShoppingItem, Boolean) -> Unit =
@@ -33,7 +35,8 @@ fun ShoppingCart(
         onTogglePicked = onTogglePicked,
         onItemClick = onItemClick,
         onDeleteClick = onDeleteClick,
-        onShareClick = onShareClick
+        onShareClick = onShareClick,
+        onImportClick = onImportClick
     )
 
 }
