@@ -28,11 +28,11 @@ class ImportCartActivity : ComponentActivity() {
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    val userId = intent.getLongExtra("userId", -1)
+                    val cartId = intent.getLongExtra("cartId", -1)
 
                     ShoppingItem(viewModel) {
                         if (viewModel.isValid()) {
-                            viewModel.import(userId)
+                            viewModel.import(cartId)
                             finish()
                         }
                     }

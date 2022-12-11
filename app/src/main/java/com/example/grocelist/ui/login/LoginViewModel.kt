@@ -15,8 +15,8 @@ class LoginViewModel(
     var uiState by mutableStateOf<LoginUiState>(LoginUiState.Idle)
         private set
 
-    var email by mutableStateOf("a")
-    var password by mutableStateOf("123")
+    var email by mutableStateOf("")
+    var password by mutableStateOf("")
 
     fun login() {
         viewModelScope.launch {

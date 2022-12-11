@@ -15,21 +15,27 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.grocelist.model.ShoppingItem
+import com.example.grocelist.ui.history.ARG_CART_ID
 import com.example.grocelist.ui.item.ShoppingItemActivity
-import com.example.grocelist.ui.History
 import com.example.grocelist.ui.shopping_cart.ShoppingCart
 import com.example.grocelist.ui.shopping_cart.ShoppingCartViewModel
 import com.example.grocelist.ui.routes.Screen
+import com.example.grocelist.ui.shopping_cart.AddCartActivity
 import com.example.grocelist.ui.shopping_cart.ImportCartActivity
 import com.example.grocelist.ui.theme.GrocelistTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.example.grocelist.ui.history.History
+import com.example.grocelist.ui.history.HistoryDetailsActivity
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             val viewModel: ShoppingCartViewModel by viewModel()
             val userId = intent.getLongExtra("userId", -1)
+            val carts = viewModel.allCarts(userId).collectAsState(initial = listOf())
+            val lastCart = viewModel.getCart(userId).collectAsState(initial = null)
 
             GrocelistTheme {
                 val navController = rememberNavController()
@@ -76,7 +82,7 @@ class MainActivity : ComponentActivity() {
                             val intent =
                                 Intent(this@MainActivity, ShoppingItemActivity::class.java).apply {
                                     putExtra("id", item.id)
-                                    putExtra("userId", userId)
+                                    putExtra("cartId", lastCart.value?.id)
                                 }
                             startActivity(intent)
                         }
@@ -88,7 +94,7 @@ class MainActivity : ComponentActivity() {
                                         this@MainActivity,
                                         ShoppingItemActivity::class.java
                                     ).apply {
-                                        putExtra("userId", userId)
+                                        putExtra("cartId", lastCart.value?.id)
                                     }
                                 )
                             }
@@ -98,6 +104,17 @@ class MainActivity : ComponentActivity() {
                                     Intent(
                                         this@MainActivity,
                                         ImportCartActivity::class.java
+                                    ).apply {
+                                        putExtra("cartId", lastCart.value?.id)
+                                    }
+                                )
+                            }
+
+                            val onSubAddClick: () -> Unit = {
+                                startActivity(
+                                    Intent(
+                                        this@MainActivity,
+                                        AddCartActivity::class.java
                                     ).apply {
                                         putExtra("userId", userId)
                                     }
@@ -109,16 +126,20 @@ class MainActivity : ComponentActivity() {
                                 userId,
                                 onAddClick = onAddClick,
                                 onItemClick = onItemClick,
-                                onImportClick = onImportClick
+                                onImportClick = onImportClick,
+                                onSubAddClick = onSubAddClick
                             )
                         }
 
                         composable(Screen.History.route) {
-                            History(
-                                viewModel,
-                                userId,
-                                onItemClick = onItemClick
-                            )
+                            History(items = carts.value,
+                                onDeleteClick =  { id -> viewModel.deleteCart(id) },
+                                onItemClick = {
+                                val intent =
+                                    Intent(this@MainActivity, HistoryDetailsActivity::class.java)
+                                intent.putExtra(ARG_CART_ID, it.id)
+                                startActivity(intent)
+                            })
                         }
                     }
                 }

@@ -3,7 +3,7 @@ package com.example.grocelist.data.shopping_item
 import com.example.grocelist.model.ShoppingItem
 
 class ShoppingItemRepository(private val dao: ShoppingItemDao) {
-    fun all(userId: Long, picked: Boolean) = dao.all(userId, picked)
+    fun all(cartId: Long) = dao.all(cartId)
     suspend fun get(id: Long) = dao.get(id)
     fun insert(item: ShoppingItem) = dao.insert(item)
     fun update(item: ShoppingItem) = dao.update(item)

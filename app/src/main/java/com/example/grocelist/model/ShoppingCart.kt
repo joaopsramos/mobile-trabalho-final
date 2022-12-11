@@ -2,8 +2,6 @@ package com.example.grocelist.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.time.Instant
-import java.util.Date
 
 @Entity(tableName = "shopping_cart")
 data class ShoppingCart(

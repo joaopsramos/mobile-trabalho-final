@@ -18,11 +18,11 @@ import com.example.grocelist.model.ShoppingItem
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ShoppingItemList(
+fun GenericItemsList(
     items: State<List<ShoppingItem>>,
-    title: String,
+    title: String?,
     onAddClick: (() -> Unit)? = null,
-    onTogglePicked: (ShoppingItem, Boolean) -> Unit,
+    onTogglePicked: ((ShoppingItem, Boolean) -> Unit)? = null,
     onItemClick: ((ShoppingItem) -> Unit)? = null,
     onDeleteClick: ((ShoppingItem) -> Unit)? = null,
     onShareClick: ((List<ShoppingItem>) -> Unit)? = null,
@@ -33,13 +33,15 @@ fun ShoppingItemList(
             .fillMaxSize()
             .background(color = MaterialTheme.colors.background)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(text = title, style = MaterialTheme.typography.h5)
+        if (title != null) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(all = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = title, style = MaterialTheme.typography.h6)
+            }
         }
 
         LazyColumn(modifier = Modifier.weight(1f)) {
@@ -87,7 +89,10 @@ fun ShoppingItemList(
         ) {
             if (onImportClick != null) {
                 FloatingActionButton(
-                    modifier = Modifier.align(Alignment.CenterStart).width(38.dp).height(38.dp),
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .width(38.dp)
+                        .height(38.dp),
                     onClick = { onImportClick.invoke() },
                     contentColor = MaterialTheme.colors.surface,
                     backgroundColor = MaterialTheme.colors.secondary
@@ -103,13 +108,16 @@ fun ShoppingItemList(
                     contentColor = MaterialTheme.colors.surface,
                     backgroundColor = MaterialTheme.colors.primary
                 ) {
-                    Icon(Icons.Default.Add, contentDescription = "add")
+                    Icon(Icons.Default.AddShoppingCart, contentDescription = "add")
                 }
             }
 
             if (onShareClick != null) {
                 FloatingActionButton(
-                    modifier = Modifier.align(Alignment.CenterEnd).width(38.dp).height(38.dp),
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .width(38.dp)
+                        .height(38.dp),
                     onClick = { onShareClick.invoke(items.value) },
                     contentColor = MaterialTheme.colors.surface,
                     backgroundColor = MaterialTheme.colors.secondary
@@ -124,7 +132,7 @@ fun ShoppingItemList(
 @Composable
 fun ShoppingItem(
     item: ShoppingItem,
-    onCheckboxClick: (item: ShoppingItem, picked: Boolean) -> Unit,
+    onCheckboxClick: ((item: ShoppingItem, picked: Boolean) -> Unit)? = null,
 ) {
     Row(
         modifier = Modifier
@@ -135,8 +143,9 @@ fun ShoppingItem(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Checkbox(
                 checked = item.picked,
-                onCheckedChange = { onCheckboxClick.invoke(item, it) },
-                Modifier.padding(1.dp)
+                onCheckedChange = { onCheckboxClick?.invoke(item, it) },
+                enabled = onCheckboxClick != null,
+                modifier = Modifier.padding(1.dp),
             )
 
             Text(

@@ -22,6 +22,14 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".ui.shopping_cart.AddCartActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Grocelist">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ui.shopping_cart.ImportCartActivity"
             android:exported="false"
             android:theme="@style/Theme.Grocelist">
@@ -52,6 +60,8 @@
             android:name=".ui.register.RegisterActivity"
             android:noHistory="true"
             android:theme="@style/Theme.Grocelist" />
+
+        <activity android:name=".ui.history.HistoryDetailsActivity" />
     </application>
 
 </manifest>

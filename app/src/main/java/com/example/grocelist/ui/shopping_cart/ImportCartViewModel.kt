@@ -24,10 +24,10 @@ class ImportCartViewModel(private val repo: ShoppingItemRepository) : ViewModel(
         return true
     }
 
-    fun import(userId: Long) = viewModelScope.launch(Dispatchers.IO) {
+    fun import(cartId: Long) = viewModelScope.launch(Dispatchers.IO) {
         for (line in input.lines()) {
-            val split = line.split(" - ", limit = 2)
-            val shoppingItem = ShoppingItem(userId, split[1], split[0].toInt())
+            val split = line.split("-", limit = 2)
+            val shoppingItem = ShoppingItem(cartId, split[1].trim(), split[0].trim().toIntOrNull() ?: 1)
 
             repo.insert(shoppingItem)
         }

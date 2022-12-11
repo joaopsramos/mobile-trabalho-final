@@ -33,7 +33,6 @@ class LoginActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val viewModel: LoginViewModel by viewModel()
-            viewModel.login()
 
             GrocelistTheme {
                 Surface(

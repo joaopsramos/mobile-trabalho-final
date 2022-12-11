@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class ShoppingItemViewModel(private val repo: ShoppingItemRepository) : ViewModel() {
     private var itemId: Long? = null
-    private var userId: Long? = null
+    private var cartId: Long? = null
 
     var itemName by mutableStateOf("")
     var itemQty by mutableStateOf("1")
@@ -21,12 +21,12 @@ class ShoppingItemViewModel(private val repo: ShoppingItemRepository) : ViewMode
     var nameError by mutableStateOf("")
     var qtyError by mutableStateOf("")
 
-    fun fillItemInformation(userId: Long, itemId: Long) {
+    fun fillItemInformation(cartId: Long, itemId: Long) {
         viewModelScope.launch {
             if (itemId == -1L) return@launch
 
             this@ShoppingItemViewModel.itemId = itemId
-            this@ShoppingItemViewModel.userId = userId
+            this@ShoppingItemViewModel.cartId = cartId
 
             val item = repo.get(itemId)
 
@@ -47,15 +47,15 @@ class ShoppingItemViewModel(private val repo: ShoppingItemRepository) : ViewMode
         return true
     }
 
-    fun add(userId: Long) = viewModelScope.launch(Dispatchers.IO) {
-        repo.insert(ShoppingItem(userId, itemName, itemQty.toInt()))
+    fun add(cartId: Long) = viewModelScope.launch(Dispatchers.IO) {
+        repo.insert(ShoppingItem(cartId, itemName, itemQty.toInt()))
     }
 
     fun update() = viewModelScope.launch(Dispatchers.IO) {
         repo.update(
             ShoppingItem(
                 itemId ?: 0L,
-                userId ?: 0L,
+                cartId ?: 0L,
                 itemName,
                 itemQty.toInt(),
                 picked.toBoolean()

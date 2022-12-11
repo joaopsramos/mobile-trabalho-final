@@ -31,10 +31,10 @@ class ShoppingItemActivity : ComponentActivity() {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     val itemId = intent.getLongExtra("id", -1)
-                    val userId = intent.getLongExtra("userId", -1)
+                    val cartId = intent.getLongExtra("cartId", -1)
 
                     if (itemId != -1L) {
-                        viewModel.fillItemInformation(userId, itemId)
+                        viewModel.fillItemInformation(cartId, itemId)
 
                         ShoppingItem(viewModel, buttonText = "Atualizar") {
                             if (viewModel.isValid()) {
@@ -45,7 +45,7 @@ class ShoppingItemActivity : ComponentActivity() {
                     } else {
                         ShoppingItem(viewModel, buttonText = "Adicionar") {
                             if (viewModel.isValid()) {
-                                viewModel.add(userId)
+                                viewModel.add(cartId)
                                 finish()
                             }
                         }
