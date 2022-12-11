@@ -23,7 +23,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.grocelist.R
-import com.example.grocelist.data.User
+import com.example.grocelist.model.User
 import com.example.grocelist.ui.login.LoginActivity
 import com.example.grocelist.ui.theme.GrocelistTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel

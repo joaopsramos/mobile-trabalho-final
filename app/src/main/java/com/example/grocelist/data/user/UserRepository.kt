@@ -1,4 +1,6 @@
-package com.example.grocelist.data
+package com.example.grocelist.data.user
+
+import com.example.grocelist.model.User
 
 class UserRepository(private val dao: UserDao) {
     suspend fun getUserByEmailAndPassword(email: String, password: String): User? {

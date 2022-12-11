@@ -1,4 +1,4 @@
-package com.example.grocelist.data
+package com.example.grocelist.data.shopping_item
 
 import com.example.grocelist.model.ShoppingItem
 

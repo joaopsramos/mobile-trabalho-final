@@ -23,7 +23,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.grocelist.MainActivity
 import com.example.grocelist.R
-import com.example.grocelist.data.User
+import com.example.grocelist.model.User
 import com.example.grocelist.ui.register.RegisterActivity
 import com.example.grocelist.ui.theme.GrocelistTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -33,6 +33,7 @@ class LoginActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val viewModel: LoginViewModel by viewModel()
+            viewModel.login()
 
             GrocelistTheme {
                 Surface(

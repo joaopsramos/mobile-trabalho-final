@@ -2,7 +2,7 @@ package com.example.grocelist.ui.shopping_cart
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.grocelist.data.ShoppingItemRepository
+import com.example.grocelist.data.shopping_item.ShoppingItemRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

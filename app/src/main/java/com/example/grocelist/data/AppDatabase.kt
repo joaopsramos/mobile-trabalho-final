@@ -4,11 +4,17 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.grocelist.data.shopping_cart.ShoppingCartDao
+import com.example.grocelist.data.shopping_item.ShoppingItemDao
+import com.example.grocelist.data.user.UserDao
+import com.example.grocelist.model.ShoppingCart
 import com.example.grocelist.model.ShoppingItem
+import com.example.grocelist.model.User
 
-@Database(entities = [ShoppingItem::class, User::class], version = 1)
+@Database(entities = [ShoppingItem::class, ShoppingCart::class, User::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun shoppingItemDao(): ShoppingItemDao
+    abstract fun shoppingCartDao(): ShoppingCartDao
     abstract fun userDao(): UserDao
 
     companion object {

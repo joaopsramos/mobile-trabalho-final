@@ -1,8 +1,9 @@
-package com.example.grocelist.data
+package com.example.grocelist.data.user
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import com.example.grocelist.model.User
 
 @Dao
 interface UserDao {

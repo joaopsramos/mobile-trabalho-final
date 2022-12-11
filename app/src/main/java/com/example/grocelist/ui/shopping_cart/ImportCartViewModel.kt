@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.grocelist.data.ShoppingItemRepository
+import com.example.grocelist.data.shopping_item.ShoppingItemRepository
 import com.example.grocelist.model.ShoppingItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

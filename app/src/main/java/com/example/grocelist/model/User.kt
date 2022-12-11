@@ -1,4 +1,4 @@
-package com.example.grocelist.data
+package com.example.grocelist.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

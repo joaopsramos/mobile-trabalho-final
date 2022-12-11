@@ -1,4 +1,4 @@
-package com.example.grocelist.data
+package com.example.grocelist.data.shopping_item
 
 import androidx.room.Dao
 import androidx.room.Insert
